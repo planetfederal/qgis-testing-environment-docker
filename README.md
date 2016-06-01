@@ -39,7 +39,7 @@ QGIS and the image is named `qgis-testing-environment`:
 ```
 # Allow connections from any host
 $ xhost +
-$ docker run --rm  -it --name qgis_desktop-testing-environment -v /tmp/.X11-unix:/tmp/.X11-unix  \
+$ docker run --rm  -it --name qgis-testing-environment -v /tmp/.X11-unix:/tmp/.X11-unix  \
     -e DISPLAY=unix$DISPLAY qgis-testing-environment qgis
 ```
 
@@ -63,7 +63,7 @@ that is accessible by the container.
 
 ```
 $ docker run -d --name qgis-testing-environment -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v /my_tests/:/tests_directory -e DISPLAY=:99 qgis-desktop
+    -v /my_tests/:/tests_directory -e DISPLAY=:99 qgis-testing-environment
 
 ```
 
