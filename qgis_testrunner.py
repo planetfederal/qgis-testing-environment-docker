@@ -47,6 +47,7 @@ __date__ = 'May 2016'
 import os
 import re
 import sys
+import traceback
 import signal
 import importlib
 from pexpect import run
@@ -74,8 +75,8 @@ def __get_test_function(test_module_name):
         print("QGIS Test Runner - Trying to import %s" % test_module_name)
         try:
             test_module = importlib.import_module(test_module_name)
-        except ImportError:
-            return None
+        except ImportError, e:
+            raise e
     return getattr(test_module, function_name, None)
 
 if iface is None:
@@ -140,11 +141,11 @@ else: # We are inside QGIS!
         try:
             test_module_name = QgsApplication.instance().argv()[-1]
             function_name = __get_test_function(test_module_name)
-            if function_name is None:
-                eprint("QGIS Test Runner Inside - [ERROR] cannot load test function from %s" % test_module_name)
             function_name()
         except Exception, e:
-            eprint("QGIS Test Runner Inside - [ERROR] Exception: %s" % e)
+            eprint("QGIS Test Runner Inside - [FAILED] Exception: %s" % e)
+            # Print tb
+            traceback.print_exc(file=sys.stdout)
         app = QgsApplication.instance()
         os.kill(app.applicationPid(), signal.SIGTERM)
     iface.initializationCompleted.connect(__run_test)
