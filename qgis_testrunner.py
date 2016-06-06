@@ -123,7 +123,7 @@ if iface is None:
 
 else: # We are inside QGIS!
     # Start as soon as the initializationCompleted signal is fired
-    from qgis.core import QgsApplication
+    from qgis.core import QgsApplication, QgsProjectBadLayerDefaultHandler, QgsProject
     from PyQt.QtCore import QDir
     from qgis.utils import iface
 
@@ -134,6 +134,8 @@ else: # We are inside QGIS!
         """
         Run the test specified as last argument in the command line.
         """
+        # Disable modal handler for bad layers
+        QgsProject.instance().setBadLayerHandler(QgsProjectBadLayerDefaultHandler())
         eprint("QGIS Test Runner Inside - starting the tests ...")
         try:
             test_module_name = QgsApplication.instance().argv()[-1]
