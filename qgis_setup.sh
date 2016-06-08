@@ -6,8 +6,8 @@
 PLUGIN_NAME=$1
 CONF_FOLDER="/root/.config/QGIS"
 CONF_FILE="${CONF_FOLDER}/QGIS2.conf"
-PLUGIN_FOLDER="/root/.qgis2/python/plugins"
-
+QGIS2_FOLDER="/root/.qgis2"
+PLUGIN_FOLDER="${QGIS2_FOLDER}/python/plugins"
 
 # Creates the config file
 mkdir -p $CONF_FOLDER
@@ -18,6 +18,9 @@ touch $CONF_FILE
 
 # Creates plugin folder
 mkdir -p $PLUGIN_FOLDER
+
+# Install auth DB with boundless test certificates: https://github.com/boundlessgeo/boundless-test-certs
+cp /qgis-auth.db $QGIS2_FOLDER
 
 # Disable tips
 printf "[Qgis]\n" >> $CONF_FILE
