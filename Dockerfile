@@ -43,7 +43,9 @@ ADD supervisord.conf /etc/supervisor/
 ADD supervisor.xvfb.conf /etc/supervisor/supervisor.d/
 
 # Add test certificates
-ADD qgis-auth.db /qgis-auth.db
+# NOTE: commented because for pki tests it's not necessary because qgis-auth.sb
+# is populated dynamically by the test setup
+# ADD qgis-auth.db /qgis-auth.db
 
 # This paths are for both kartoza images (compiled) and for deb installed
 # needed to find PyQt wrapper provided by QGIS
