@@ -19,7 +19,7 @@ Committers
 
 The project committers:
 
-* `Alessandro PAsotti <https://github.com/elpaso>`_ (Boundless)
+* `Alessandro Pasotti <https://github.com/elpaso>`_ (Boundless)
 * `Luigi Pirelli <https://github.com/luipir>`_ (Boundless)
 
 This is a small project that communicates via pull request.
