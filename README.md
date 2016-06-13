@@ -6,30 +6,26 @@ executing unit tests inside a real QGIS instance.
 
 # Features
 
-The image contains QGIS 2.14.2 from kartoza image and a few scripts to
-set up a testing environment and to run tests inside QGIS.
-
-QGIS 2.14.3 is not currently usable due to a bug in python utils implementation
-introduced just a few days before the release.
-When 2.14.4 will be available, the Docker will be most probably built from
-official images available on debian-gis.
+The docker file builds QGIS from a specified git repo and branch and
+sets up a testing environment and to run tests inside QGIS.
 
 You can use this docker to test QGIS or to run unit tests inside QGIS,
 xvfb is available and running as a service inside the container to allow
 for fully automated headless testing in Travis CI jobs.
-
 
 # Building
 
 You can build the image with:
 
 ```
-# Place your IP address here, if you want to use apt-catcher note that APT
-# catcher is not enabled by default, in order to enable it, you should
-# uncomment two lines in the docker file (see comments in Dockerfile).
-$ export ADDR=192.168.1.1
-$ docker build -t qgis-testing-environment --build-arg APT_CATCHER_IP=$ADDR .
+$ docker build -t qgis-testing-environment \
+    --build-arg QGIS_REPOSITORY='https://github.com/qgis/QGIS.git' \
+    --build-arg QGIS_BRANCH='master'
 ```
+
+Optional APT CATCHER support can be activated by uncommenting a few lines in the
+docker file (see the comments in `Dockerfile`).
+
 
 # Running QGIS
 

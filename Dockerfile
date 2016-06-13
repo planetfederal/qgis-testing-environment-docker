@@ -1,9 +1,13 @@
 FROM kartoza/qgis-base:v2
 MAINTAINER Alessandro Pasotti <apasotti@boundlessgeo.com>
 
+ARG QGIS_BRANCH=master
+# Note: do not use git but https here!
+ARG QGIS_REPOSITORY=https://github.com/qgis/QGIS.git
+
 # Clone the specified branch from the specified repo:
 # default to master on git://github.com/qgis/QGIS.git
-RUN git clone --depth 1 -b ${QGIS_BRANCH:-master} ${QGIS_REPOSITORY:-git://github.com/qgis/QGIS.git}; \
+RUN git clone --depth 1 -b ${QGIS_BRANCH} ${QGIS_REPOSITORY}; \
     mkdir /build; \
     cd /build; \
         cmake /QGIS \
@@ -12,9 +16,10 @@ RUN git clone --depth 1 -b ${QGIS_BRANCH:-master} ${QGIS_REPOSITORY:-git://githu
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so \
         -DQSCINTILLA_INCLUDE_DIR=/usr/include/qt4 \
-        -DQWT_LIBRARY=/usr/lib/libqwt.so \
-        -DWITH_SERVER=ON \
+        -DWITH_QWTPOLAR=OFF \
+        -DWITH_SERVER=OFF \
         -DBUILD_TESTING=OFF \
+        -DENABLE_TESTS=OFF \
         -DWITH_INTERNAL_QWTPOLAR=ON; \
     make install -j4; \
     cd /; \
