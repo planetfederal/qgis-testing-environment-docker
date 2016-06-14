@@ -20,7 +20,7 @@ You can build the image with:
 ```
 $ docker build -t qgis-testing-environment \
     --build-arg QGIS_REPOSITORY='https://github.com/qgis/QGIS.git' \
-    --build-arg QGIS_BRANCH='master'
+    --build-arg QGIS_BRANCH='master' .
 ```
 
 Optional APT CATCHER support can be activated by uncommenting a few lines in the
@@ -149,7 +149,7 @@ before_install:
     # or just pull it:
     - docker pull elpaso/qgis-testing-environment:latest
 install:
-    - docker run -d --name qgis-testing-environment -v ${TRAVIS_BUILD_DIR}:/tests_directory -e DISPLAY=:99 qgis-testing-environment
+    - docker run -d --name qgis-testing-environment -v ${TRAVIS_BUILD_DIR}:/tests_directory -e DISPLAY=:99 elpaso/qgis-testing-environment
     - sleep 10
     # Setup qgis and enable the plugin
     - docker exec -it qgis-testing-environment sh -c "qgis_setup.sh QuickWKT"
