@@ -19,9 +19,6 @@ touch $CONF_FILE
 # Creates plugin folder
 mkdir -p $PLUGIN_FOLDER
 
-# Install auth DB with boundless test certificates: https://github.com/boundlessgeo/boundless-test-certs
-cp /qgis-auth.db $QGIS2_FOLDER
-
 # Disable tips
 printf "[Qgis]\n" >> $CONF_FILE
 SHOW_TIPS=`qgis --help 2>&1 | head -2 | grep 'QGIS - ' | perl -npe 'chomp; s/QGIS - (\d+)\.(\d+).*/showTips\1\2=false/'`

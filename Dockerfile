@@ -68,11 +68,6 @@ ADD startup.py /root/.qgis2/python/startup.py
 ADD supervisord.conf /etc/supervisor/
 ADD supervisor.xvfb.conf /etc/supervisor/supervisor.d/
 
-# Add test certificates
-# NOTE: commented because for pki tests it's not necessary because qgis-auth.sb
-# is populated dynamically by the test setup
-# ADD qgis-auth.db /qgis-auth.db
-
 # This paths are for
 # - kartoza images (compiled)
 # - deb installed
