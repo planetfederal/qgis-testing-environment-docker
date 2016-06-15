@@ -6,7 +6,6 @@ ARG QGIS_BRANCH=master
 ARG QGIS_REPOSITORY=https://github.com/qgis/QGIS.git
 
 # Clone the specified branch from the specified repo:
-# default to master on git://github.com/qgis/QGIS.git
 RUN git clone --depth 1 -b ${QGIS_BRANCH} ${QGIS_REPOSITORY}; \
     mkdir /build; \
     cd /build; \
