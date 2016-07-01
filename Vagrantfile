@@ -12,9 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  #config.vm.box = "ubuntu/trusty64"
-  config.vm.box = "dummy"
-  config.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
+  config.vm.box = "ubuntu/trusty64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -64,6 +62,8 @@ Vagrant.configure("2") do |config|
 
       override.ssh.username = "ubuntu"
       override.ssh.private_key_path = ENV["AWS_PRIVATE_KEY"]
+      override.vm.box = "dummy"
+      override.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
     end
   #
   # View the documentation for the provider you are using for more
