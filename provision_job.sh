@@ -21,13 +21,19 @@ echo "Image name: $IMAGE_NAME"
 
 cd
 if [ ! -d "qgis-testing-environment-docker" ]; then
-    clone https://github.com/boundlessgeo/qgis-testing-environment-docker.git
+    git clone https://github.com/boundlessgeo/qgis-testing-environment-docker.git
 fi
 cd qgis-testing-environment-docker
 # Delete all containers
-docker rm $(docker ps -a -q)
+IM_TO_RM=$(docker ps -a -q)
+if [ -n "$IM_TO_RM" ]; then
+    docker rm $IM_TO_RM$IM_TO_RM
+fi
 # Delete all images
-docker rmi $(docker images -q ${IMAGE_NAME})
+IM_TO_RM=$(docker images -q ${IMAGE_NAME})
+if [ -n "$IM_TO_RM" ]; then
+    docker rmi $IM_TO_RM
+fi
 docker build -t ${IMAGE_NAME}:${TAG} \
     --build-arg QGIS_REPOSITORY=$REPO \
     --build-arg QGIS_BRANCH=$BRANCH .
@@ -36,7 +42,7 @@ HASH=`git rev-parse HEAD|cut -c -8`
 docker tag ${IMAGE_NAME}:${TAG} ${IMAGE_NAME}:${HASH}
 
 # Push the image to Docker Hub
-if [ "${DOCKER_HUB_PASSWORD}" -ne "" ]; then
+if [ -n "${DOCKER_HUB_PASSWORD}" ]; then
     docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
     docker push ${IMAGE_NAME}:${HASH}
     docker push ${IMAGE_NAME}:${TAG}

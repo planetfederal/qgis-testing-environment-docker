@@ -12,7 +12,9 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  #config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "dummy"
+  config.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -49,8 +51,20 @@ Vagrant.configure("2") do |config|
   #
      # Customize the amount of memory on the VM:
      vb.memory = "4096"
-     vb.cpus = 4
+     vb.cpus = 8
   end
+
+  config.vm.provider :aws do |aws, override|
+      aws.access_key_id = ENV["AWS_KEY"]
+      aws.secret_access_key = ENV["AWS_SECRET_KEY"]
+      aws.session_token = ENV["AWS_SESSION_TOKEN"]
+      aws.keypair_name = ENV["AWS_KEYPAIR_NAME"]
+
+      aws.ami = "ami-fce3c696"
+
+      override.ssh.username = "ubuntu"
+      override.ssh.private_key_path = ENV["AWS_PRIVATE_KEY"]
+    end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
