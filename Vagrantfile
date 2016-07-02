@@ -54,14 +54,16 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :aws do |aws, override|
       aws.access_key_id = ENV["AWS_KEY"]
-      aws.secret_access_key = ENV["AWS_SECRET_KEY"]
-      aws.session_token = ENV["AWS_SESSION_TOKEN"]
-      aws.keypair_name = ENV["AWS_KEYPAIR_NAME"]
+      aws.secret_access_key = ENV["AWS_SECRET"]
+      aws.keypair_name = ENV["AWS_KEYNAME"]
 
-      aws.ami = "ami-fce3c696"
+      aws.terminate_on_shutdown = true
+      aws.region = ENV["AWS_REGION"]
+      aws.ami = "ami-87564feb"
+      aws.instance_type = "t2.medium"
 
+      override.ssh.private_key_path = ENV["AWS_KEYPATH"]
       override.ssh.username = "ubuntu"
-      override.ssh.private_key_path = ENV["AWS_PRIVATE_KEY"]
       override.vm.box = "dummy"
       override.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
     end
