@@ -26,6 +26,50 @@ $ docker build -t qgis-testing-environment \
 Optional APT CATCHER support can be activated by uncommenting a few lines in the
 docker file (see the comments in `Dockerfile`).
 
+# Building with Vagrant
+
+A `Vagrantfile` is available for *AWS* and *VirtualBox* providers.
+
+A set of environment variables can be used to configure the build:
+
+- **SHELL_ARGS** the parameters passed to the build script in this order:
+    - *REPO* defaults to `https://github.com/qgis/QGIS.git`
+    - *BRANCH* defaults to `master`
+    - *DOCKER_HUB_USERNAME* no default
+    - *DOCKER_HUB_PASSWORD* no default
+
+
+ for the *AWS* provider:
+
+- **AWS_KEY** AWS access key
+- **AWS_SECRET**
+- **AWS_KEYNAME**
+- **AWS_KEYPATH**
+- **AWS_REGION**
+
+Example run script ofr the *AWS* provider (`AWS_*` env vars are not shown):
+
+    #!/bin/bash
+    # Pass arguments to vagrant to configure the build
+    #
+    # None of the arguments is mandatory,
+    # 1: REPO default: https://github.com/qgis/QGIS.git
+    # 2: BRANCH default: master
+    # 3: TAG (for the generated Docker image): default: master
+    # 4: DOCKER_HUB_USERNAME: no default
+    # 5: DOCKER_HUB_PASSWORD: no default
+
+    REPO="https://github.com/qgis/QGIS.git"
+    BRANCH="master"
+    TAG="master"
+    DOCKER_HUB_USERNAME="mydockerusername"
+    DOCKER_HUB_PASSWORD="mydockerpassword"
+
+    ARGS="$REPO $BRANCH $TAG $DOCKER_HUB_USERNAME \
+         $DOCKER_HUB_PASSWORD"
+    SHELL_ARGS="${ARGS}" vagrant up --provider=aws
+    vagrant -f destroy
+
 
 # Running QGIS
 

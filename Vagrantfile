@@ -81,9 +81,12 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+
+  # Install the required software
   config.vm.provision "shell",
     path: "provision_setup.sh"
-  # Build the images
+
+  # Build the QGIS image
   config.vm.provision "shell",
     path: "provision_job.sh",
     args: ENV['SHELL_ARGS'],
