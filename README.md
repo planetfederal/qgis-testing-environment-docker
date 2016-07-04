@@ -35,13 +35,14 @@ A set of environment variables can be used to configure the build:
 - **SHELL_ARGS** the parameters passed to the build script in this order:
     - *REPO* defaults to `https://github.com/qgis/QGIS.git`
     - *BRANCH* defaults to `master`
+    - *TAG* defaults to `master` (this is the Docker image tag and not the git tag)
     - *DOCKER_HUB_USERNAME* no default
     - *DOCKER_HUB_PASSWORD* no default
 
 
  for the *AWS* provider:
 
-- **AWS_KEY** AWS access key
+- **AWS_KEY**
 - **AWS_SECRET**
 - **AWS_KEYNAME**
 - **AWS_KEYPATH**
