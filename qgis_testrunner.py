@@ -125,7 +125,10 @@ if iface is None:
 else: # We are inside QGIS!
     # Start as soon as the initializationCompleted signal is fired
     from qgis.core import QgsApplication, QgsProjectBadLayerDefaultHandler, QgsProject
-    from PyQt.QtCore import QDir
+    try:
+        from PyQt4.QtCore import QDir
+    except ImportError:
+        from PyQt.QtCore import QDir
     from qgis.utils import iface
 
     # Add current working dir to the python path
