@@ -27,7 +27,7 @@ cd qgis-testing-environment-docker
 # Delete all containers
 IM_TO_RM=$(docker ps -a -q)
 if [ -n "$IM_TO_RM" ]; then
-    docker rm $IM_TO_RM$IM_TO_RM
+    docker rm $IM_TO_RM
 fi
 # Delete all images
 IM_TO_RM=$(docker images -q ${IMAGE_NAME})
