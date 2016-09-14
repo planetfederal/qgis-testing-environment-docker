@@ -44,6 +44,7 @@ docker tag ${IMAGE_NAME}:${TAG} ${IMAGE_NAME}:${HASH}
 # Push the image to Docker Hub
 if [ -n "${DOCKER_HUB_PASSWORD}" ]; then
     docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
-    docker push ${IMAGE_NAME}:${HASH}
+    # Do not tag with hash or we will accumulate a lot of old images on the hub
+    #docker push ${IMAGE_NAME}:${HASH}
     docker push ${IMAGE_NAME}:${TAG}
 fi
