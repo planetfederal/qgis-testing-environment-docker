@@ -47,6 +47,9 @@ A set of environment variables can be used to configure the build:
 - **AWS_KEYNAME**
 - **AWS_KEYPATH**
 - **AWS_REGION**
+- **AWS_AMI** : this might depend on the region, the tests were performed on
+  "ami-87564feb", that is a standard Ubuntu 14.04 available in region eu-central-1
+
 
 Example run script ofr the *AWS* provider (`AWS_*` env vars are not shown):
 
@@ -77,7 +80,7 @@ Jenkins needs Vagrant and Git plugins.
 Vagrant needs the AWS plugin installed and available for the `jenkins` user:
 
     $ sudo -iu jenkins vagrant plugin install vagrant-aws
-    
+
 # Running QGIS
 
 To run a container, assuming that you want to use your current display to use
