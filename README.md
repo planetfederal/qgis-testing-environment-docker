@@ -49,9 +49,10 @@ A set of environment variables can be used to configure the build:
 - **AWS_REGION**
 - **AWS_AMI** : this might depend on the region, the tests were performed on
   "ami-87564feb", that is a standard Ubuntu 14.04 available in region eu-central-1
+- **AWS_INST_TYPE** : instance type to launch, e.g. "m3.large"
 
 
-Example run script ofr the *AWS* provider (`AWS_*` env vars are not shown):
+Example run script for the *AWS* provider (`AWS_*` env vars are not shown):
 
     #!/bin/bash
     # Pass arguments to vagrant to configure the build

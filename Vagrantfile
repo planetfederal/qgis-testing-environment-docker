@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
       aws.terminate_on_shutdown = true
       aws.region = ENV["AWS_REGION"]
       aws.ami = ENV["AWS_AMI"]
-      aws.instance_type = "t2.medium"
+      aws.instance_type = ENV["AWS_INST_TYPE"]
 
       override.ssh.private_key_path = ENV["AWS_KEYPATH"]
       override.ssh.username = "ubuntu"
