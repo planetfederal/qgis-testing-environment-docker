@@ -66,6 +66,7 @@ Vagrant.configure("2") do |config|
       override.ssh.username = "ubuntu"
       override.vm.box = "dummy"
       override.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
+      override.vm.synced_folder ".", "/vagrant", type: "rsync"
     end
   #
   # View the documentation for the provider you are using for more
