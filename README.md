@@ -57,12 +57,12 @@ Example run script for the *AWS* provider (`AWS_*` env vars are not shown):
     #!/bin/bash
     # Pass arguments to vagrant to configure the build
     #
-    # None of the arguments is mandatory,
     # 1: REPO default: https://github.com/qgis/QGIS.git
     # 2: BRANCH default: master
     # 3: TAG (for the generated Docker image): default: master
     # 4: DOCKER_HUB_USERNAME: no default
     # 5: DOCKER_HUB_PASSWORD: no default
+    # 6: DOCKER_HUB_ACCOUNT: default to $DOCKER_HUB_USERNAME
 
     REPO="https://github.com/qgis/QGIS.git"
     BRANCH="master"

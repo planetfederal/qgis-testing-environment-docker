@@ -12,10 +12,13 @@
 REPO=${1:-https://github.com/qgis/QGIS.git}
 BRANCH=${2:-master}
 TAG=${3:-master}
-DOCKER_HUB_USERNAME=${4:-boundlessgeo}
+DOCKER_HUB_USERNAME=$4
 DOCKER_HUB_PASSWORD=$5
-
-IMAGE_NAME=${DOCKER_HUB_USERNAME}/qgis-testing-environment
+DOCKER_HUB_ACCOUNT=$6
+if [ -z "$6" ]; then
+    DOCKER_HUB_ACCOUNT=${DOCKER_HUB_USERNAME}
+fi
+IMAGE_NAME=${DOCKER_HUB_ACCOUNT}/qgis-testing-environment
 
 echo "Image name: $IMAGE_NAME"
 
