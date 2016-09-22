@@ -14,10 +14,12 @@ if [ -z "$OUTPUT" ]; then
     exit 1
 fi
 echo $OUTPUT | grep -q FAILED
-RESULT_CODE="$?"
+IS_FAILED="$?"
+echo $OUTPUT | grep OK | grep -q 'Ran'
+IS_PASSED="$?"
 echo "$OUTPUT"
 echo "Finished running test $1."
-if [ "$RESULT_CODE" != "0" ];
-    then exit 0;
+if [ "$IS_PASSED" -eq "0" ] && [ "$IS_FAILED" -eq "1" ]; then
+    exit 0;
 fi
 exit 1

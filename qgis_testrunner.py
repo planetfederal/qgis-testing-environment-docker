@@ -125,11 +125,14 @@ if iface is None:
 else: # We are inside QGIS!
     # Start as soon as the initializationCompleted signal is fired
     from qgis.core import QgsApplication, QgsProjectBadLayerDefaultHandler, QgsProject
-    try:
-        from PyQt4.QtCore import QDir
-    except ImportError:
-        from PyQt.QtCore import QDir
+    from PyQt.QtCore import QDir
     from qgis.utils import iface
+
+    # Monkey patch QGIS Python console
+    from console.console_output import writeOut
+    def _write(self, m):
+        sys.__stdout__.write(m)
+    writeOut.write = _write
 
     # Add current working dir to the python path
     sys.path.append(QDir.current().path())
@@ -144,6 +147,7 @@ else: # We are inside QGIS!
         try:
             test_module_name = QgsApplication.instance().argv()[-1]
             function_name = __get_test_function(test_module_name)
+            eprint("QGIS Test Runner Inside - executing function %s" % function_name)
             function_name()
         except Exception, e:
             eprint("QGIS Test Runner Inside - [FAILED] Exception: %s" % e)
