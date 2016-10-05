@@ -24,7 +24,7 @@ COPY scripts /build/scripts
 RUN /build/scripts/getDeps.sh ${QGIS_BRANCH} && \
    cd /build && \
    git clone --depth 1 -b ${QGIS_BRANCH} ${QGIS_REPOSITORY} && \
-   /build/scripts/make.sh
+   /build/scripts/make.sh ${QGIS_BRANCH}
 
 
 ################################################################################
