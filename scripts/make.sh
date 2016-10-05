@@ -18,7 +18,7 @@ if [ "$1"  != "master" ]; then
         -DBUILD_TESTING=OFF \
         -DENABLE_TESTS=OFF \
         -DWITH_INTERNAL_QWTPOLAR=ON
-then
+else
     # Build for master (Py3/Qt5)
     cmake /build/QGIS \
         -DQWT_INCLUDE_DIR=/usr/include/qwt \

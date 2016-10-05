@@ -31,7 +31,7 @@ RUN /build/scripts/getDeps.sh ${QGIS_BRANCH} && \
 # Testing environment setup
 
 # Install testing env required dependencies
-RUN apt-get -y update &&  apt-get install -y \
+RUN apt-get install -y \
     vim \
     xvfb \
     python-dev \
