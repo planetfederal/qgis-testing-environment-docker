@@ -6,14 +6,18 @@ ARG QGIS_BRANCH=master
 ARG QGIS_REPOSITORY=https://github.com/qgis/QGIS.git
 
 
-# Use apt-catcher-ng caching
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!! Disable for automated builds on Jenkins/Vagrant/AWS !!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# Use apt-catcher-ng caching:
 # Use local cached debs from host to save your bandwidth and speed thing up.
 # APT_CATCHER_IP can be changed passing an argument to the build script:
 # --build-arg APT_CATCHER_IP=xxx.xxx.xxx.xxx,
 # set the IP to that of your apt-cacher-ng host or comment the following 2 lines
 # out if you do not want to use caching
-ARG APT_CATCHER_IP=localhost
-RUN  echo 'Acquire::http { Proxy "http://'${APT_CATCHER_IP}':3142"; };' >> /etc/apt/apt.conf.d/01proxy
+#ARG APT_CATCHER_IP=localhost
+#RUN  echo 'Acquire::http { Proxy "http://'${APT_CATCHER_IP}':3142"; };' >> /etc/apt/apt.conf.d/01proxy
+
 
 ################################################################################
 # QGIS build
