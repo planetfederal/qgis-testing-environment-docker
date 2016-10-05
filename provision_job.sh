@@ -23,10 +23,7 @@ IMAGE_NAME=${DOCKER_HUB_ACCOUNT}/qgis-testing-environment
 echo "Image name: $IMAGE_NAME"
 
 cd /vagrant
-if [ ! -d "qgis-testing-environment-docker" ]; then
-    git clone https://github.com/boundlessgeo/qgis-testing-environment-docker.git
-fi
-cd qgis-testing-environment-docker
+
 # Delete all containers
 IM_TO_RM=$(docker ps -a -q)
 if [ -n "$IM_TO_RM" ]; then
