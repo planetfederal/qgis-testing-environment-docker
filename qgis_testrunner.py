@@ -73,9 +73,11 @@ def __get_test_function(test_module_name):
             raise e
         test_module_name, function_name = test_module_name[:pos], test_module_name[pos+1:]
         print("QGIS Test Runner - Trying to import %s" % test_module_name)
+        sys.stdout.flush()
         try:
             test_module = importlib.import_module(test_module_name)
         except ImportError, e:
+            traceback.print_exc(file=sys.stdout)
             raise e
     return getattr(test_module, function_name, None)
 
