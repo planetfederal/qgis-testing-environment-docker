@@ -47,14 +47,12 @@ RUN apt-get install -y \
 ADD requirements.txt /usr/local/requirements.txt
 ADD install.sh /usr/local/bin/install.sh
 # Add QGIS test runner
-ADD qgis_testrunner.py /usr/bin/qgis_testrunner.py
-ADD qgis_testrunner.sh /usr/bin/qgis_testrunner.sh
-ADD qgis_setup.sh /usr/bin/qgis_setup.sh
+ADD qgis_*.* /usr/bin/
 
-RUN chmod +x /usr/local/bin/install.sh && sleep 1 && /usr/local/bin/install.sh && \
-    chmod +x /usr/bin/qgis_testrunner.py && \
-    chmod +x /usr/bin/qgis_testrunner.sh && \
-    chmod +x /usr/bin/qgis_setup.sh
+RUN chmod +x /usr/local/bin/install.sh && \
+    sleep 1 && \
+    /usr/local/bin/install.sh && \
+    chmod +x /usr/bin/qgis_*
 
 # Monkey patch to prevent modal stacktrace on python errors
 ADD startup.py /root/.qgis2/python/startup.py
@@ -71,6 +69,6 @@ ADD supervisor.xvfb.conf /etc/supervisor/supervisor.d/
 ENV PYTHONPATH=/usr/share/qgis/python/:/usr/lib/python2.7/dist-packages/qgis:/usr/share/qgis/python/qgis
 
 # Remove some unnecessary files
-RUN /build/scripts/clean.sh
+RUN /build/scripts/clean.sh ${QGIS_BRANCH}
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]

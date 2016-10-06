@@ -1,9 +1,14 @@
 #!/bin/bash
 set -e
 
-apt-get remove -y --purge krb5-multidev build-essential bison cmake make cpp cpp-4.9 g++ g++-4.9 gcc gcc-4.9 \
-    flex libclang1-3.5 qt4-qmake rsync cmake-data g++-5 git-man liberror-perl qt4-linguist-tools libqt4-dev-bin
+apt-get remove -y --purge qt4-qmake cmake-data qt4-linguist-tools libqt4-dev-bin
 dpkg --purge `dpkg -l "*-dev" | sed -ne 's/ii  \(.*-dev\(:amd64\)\?\) .*/\1/p'` || true
+
+if [ "$1"  == "master" ]; then
+    # Clean for master (Py3/Qt5)
+    apt-get remove -y libqt4* libgtk* libsane gfortran-5 *gnome* libsane *pango* \
+                   glib* *gphoto*
+fi
 
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
