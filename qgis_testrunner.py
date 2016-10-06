@@ -66,7 +66,7 @@ def __get_test_function(test_module_name):
     try:
         test_module = importlib.import_module(test_module_name)
         function_name = 'run_all'
-    except ImportError, e:
+    except ImportError as e:
         # Strip latest name
         pos = test_module_name.rfind('.')
         if pos <= 0:
@@ -76,7 +76,7 @@ def __get_test_function(test_module_name):
         sys.stdout.flush()
         try:
             test_module = importlib.import_module(test_module_name)
-        except ImportError, e:
+        except ImportError as e:
             traceback.print_exc(file=sys.stdout)
             raise e
     return getattr(test_module, function_name, None)
@@ -151,7 +151,7 @@ else: # We are inside QGIS!
             function_name = __get_test_function(test_module_name)
             eprint("QGIS Test Runner Inside - executing function %s" % function_name)
             function_name()
-        except Exception, e:
+        except Exception as e:
             eprint("QGIS Test Runner Inside - [FAILED] Exception: %s" % e)
             # Print tb
             traceback.print_exc(file=sys.stdout)

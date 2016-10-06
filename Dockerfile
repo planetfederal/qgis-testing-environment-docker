@@ -1,12 +1,18 @@
 FROM ubuntu:16.04
 MAINTAINER Alessandro Pasotti <apasotti@boundlessgeo.com>
 
+################################################################################
+# build arguments: branch and repository
+# WARNING: if branch == "master" Py3 and Qt5 build will be activated
+
 ARG QGIS_BRANCH=master
 # Note: do not use git but https here!
 ARG QGIS_REPOSITORY=https://github.com/qgis/QGIS.git
 
 
-# Use apt-catcher-ng caching:
+################################################################################
+# apt-catcher-ng caching:
+
 # Use local cached debs from host to save your bandwidth and speed thing up.
 # APT_CATCHER_IP can be changed passing an argument to the build script:
 # --build-arg APT_CATCHER_IP=xxx.xxx.xxx.xxx,
@@ -21,6 +27,11 @@ RUN  if [ "${APT_CATCHER_IP}" != "" ]; then \
 ################################################################################
 # QGIS build
 
+# Add install script for testing environment python packages
+# This is not directly related to QGIS build but the installation
+# will be handled by getDeps script
+ADD requirements.txt /usr/local/requirements.txt
+
 COPY scripts /build/scripts
 
 # Install dependencies and git clone the repo and Make it
@@ -33,31 +44,12 @@ RUN /build/scripts/getDeps.sh ${QGIS_BRANCH} && \
 ################################################################################
 # Testing environment setup
 
-# Install testing env required dependencies
-RUN apt-get install -y \
-    vim \
-    xvfb \
-    python-dev \
-    supervisor \
-    expect-dev \
-    python-setuptools && \
-    easy_install --upgrade pip
-
-# Add install script
-ADD requirements.txt /usr/local/requirements.txt
-ADD install.sh /usr/local/bin/install.sh
 # Add QGIS test runner
 ADD qgis_*.* /usr/bin/
 
-RUN chmod +x /usr/local/bin/install.sh && \
-    sleep 1 && \
-    /usr/local/bin/install.sh && \
-    chmod +x /usr/bin/qgis_*
+RUN chmod +x /usr/bin/qgis_*
 
-# Monkey patch to prevent modal stacktrace on python errors
-ADD startup.py /root/.qgis2/python/startup.py
-
-# Add start script
+# Add service configuration script
 ADD supervisord.conf /etc/supervisor/
 ADD supervisor.xvfb.conf /etc/supervisor/supervisor.d/
 
@@ -66,7 +58,7 @@ ADD supervisor.xvfb.conf /etc/supervisor/supervisor.d/
 # - deb installed
 # - built from git
 # needed to find PyQt wrapper provided by QGIS
-ENV PYTHONPATH=/usr/share/qgis/python/:/usr/lib/python2.7/dist-packages/qgis:/usr/share/qgis/python/qgis
+ENV PYTHONPATH=/usr/share/qgis/python/:/usr/lib/python2.7/dist-packages/qgis:/usr/lib/python3/dist-packages/qgis:/usr/share/qgis/python/qgis
 
 # Remove some unnecessary files
 RUN /build/scripts/clean.sh ${QGIS_BRANCH}

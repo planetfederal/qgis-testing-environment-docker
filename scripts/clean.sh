@@ -2,6 +2,7 @@
 set -e
 
 apt-get remove -y --purge qt4-qmake cmake-data qt4-linguist-tools libqt4-dev-bin
+
 dpkg --purge `dpkg -l "*-dev" | sed -ne 's/ii  \(.*-dev\(:amd64\)\?\) .*/\1/p'` || true
 
 if [ "$1"  == "master" ]; then
