@@ -54,5 +54,5 @@ if [ -n "$PLUGIN_NAME" ]; then
 fi
 
 # Install the plugin
-ln -s /tests_directory/${PLUGIN_NAME} ${PLUGIN_FOLDER}/${PLUGIN_NAME}
-ln -s /tests_directory/${PLUGIN_NAME} ${PLUGIN_MASTER_FOLDER}/${PLUGIN_NAME}
+ln -s /tests_directory/${PLUGIN_NAME} ${PLUGIN_FOLDER}
+ln -s /tests_directory/${PLUGIN_NAME} ${PLUGIN_MASTER_FOLDER}
