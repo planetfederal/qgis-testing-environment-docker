@@ -2,3 +2,4 @@ pep8
 pexpect
 capturer
 sphinx
+requests
