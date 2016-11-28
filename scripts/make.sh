@@ -21,6 +21,7 @@ if [ "$1"  != "master" ]; then
 else
     # Build for master (Py3/Qt5)
     cmake /build/QGIS \
+        -DPYTHON_VER=3 \
         -DWITH_GRASS=ON \
         -DWITH_GRASS7=ON \
         -DQWT_INCLUDE_DIR=/usr/include/qwt \

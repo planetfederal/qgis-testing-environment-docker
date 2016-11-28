@@ -3,3 +3,5 @@ pexpect
 capturer
 sphinx
 requests
+future
+six
