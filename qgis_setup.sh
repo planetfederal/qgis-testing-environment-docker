@@ -34,6 +34,7 @@ touch $CONF_MASTER_FILE
 # Creates plugin folder
 mkdir -p $PLUGIN_FOLDER
 mkdir -p $PLUGIN_MASTER_FOLDER
+mkdir -p $STARTUP_MASTER_FOLDER
 
 # Install the monkey patches to prevent modal stacktrace on python errors
 cp /usr/bin/qgis_startup.py ${STARTUP_FOLDER}/startup.py
