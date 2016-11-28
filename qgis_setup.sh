@@ -17,6 +17,9 @@ QGIS_MASTER_FOLDER="/root/.qgis3"
 PLUGIN_FOLDER="${QGIS_FOLDER}/python/plugins"
 PLUGIN_MASTER_FOLDER="${QGIS_MASTER_FOLDER}/python/plugins"
 
+STARTUP_FOLDER="${QGIS_FOLDER}/python"
+STARTUP_MASTER_FOLDER="/root/.local/share/QGIS/QGIS3/"
+
 # Creates the config file
 mkdir -p $CONF_FOLDER
 if [ -e "$CONF_FILE" ]; then
@@ -33,8 +36,8 @@ mkdir -p $PLUGIN_FOLDER
 mkdir -p $PLUGIN_MASTER_FOLDER
 
 # Install the monkey patches to prevent modal stacktrace on python errors
-cp /usr/bin/qgis_startup.py ${QGIS_FOLDER}/python/startup.py
-cp /usr/bin/qgis_startup.py ${QGIS_MASTER_FOLDER}/python/startup.py
+cp /usr/bin/qgis_startup.py ${STARTUP_FOLDER}/startup.py
+cp /usr/bin/qgis_startup.py ${STARTUP_MASTER_FOLDER}/startup.py
 
 # Disable tips
 printf "[Qgis]\n" >> $CONF_FILE
