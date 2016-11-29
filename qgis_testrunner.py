@@ -13,11 +13,6 @@
     the dotted path to be the function name and the previous part to be the
     module.
 
-    Note: for Python 3 the test name must be passed in the environment variable
-
-    QGIS_TEST_MODULE
-
-
     Extra options for QGIS command line can be passed in the env var
     QGIS_EXTRA_OPTIONS
 
@@ -25,17 +20,12 @@
 
     # Will load geoserverexplorer.test.catalogtests and run `run_all`
     QGIS_EXTRA_OPTIONS='--optionspath .' \
-        QGIS_TEST_MODULE=geoserverexplorer.test.catalogtests\
-        GSHOSTNAME=localhost python qgis_testrunner.py
+        GSHOSTNAME=localhost \
+        python qgis_testrunner.py geoserverexplorer.test.catalogtests
 
-    # Python 2 only: Will load geoserverexplorer.test.catalogtests and run `run_my`
-    GSHOSTNAME=localhost python qgis_testrunner.py \
-        geoserverexplorer.test.catalogtests.run_my
 
-    # Python 2 and 3:
     GSHOSTNAME=localhost \
-        QGIS_TEST_MODULE=geoserverexplorer.test.catalogtests.run_my \
-         python qgis_testrunner.py
+         python qgis_testrunner.py geoserverexplorer.test.catalogtests.run_my
 
 
     ---------------------
@@ -163,10 +153,7 @@ else: # We are inside QGIS!
         QgsProject.instance().setBadLayerHandler(QgsProjectBadLayerDefaultHandler())
         eprint("QGIS Test Runner Inside - starting the tests ...")
         try:
-            # Python 3 and 2
-            test_module_name = os.environ.get('QGIS_TEST_MODULE')
-            if test_module_name is None: #  Python 2 only!
-                test_module_name = QgsApplication.instance().argv()[-1]
+            test_module_name = QgsApplication.instance().arguments()[-1]
             function_name = __get_test_function(test_module_name)
             eprint("QGIS Test Runner Inside - executing function %s" % function_name)
             function_name()
