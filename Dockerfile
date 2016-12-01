@@ -35,10 +35,9 @@ ADD requirements.txt /usr/local/requirements.txt
 COPY scripts /build/scripts
 
 # Install dependencies and git clone the repo and Make it
-RUN /build/scripts/getDeps.sh ${QGIS_BRANCH} && \
-   cd /build && \
-   git clone --depth 1 -b ${QGIS_BRANCH} ${QGIS_REPOSITORY} && \
-   /build/scripts/make.sh ${QGIS_BRANCH}
+RUN /build/scripts/getDeps.sh ${QGIS_BRANCH}
+RUN cd /build && /build/scripts/getCode.sh ${QGIS_REPOSITORY} ${QGIS_BRANCH}
+RUN cd /build && /build/scripts/make.sh ${QGIS_BRANCH}
 
 
 ################################################################################

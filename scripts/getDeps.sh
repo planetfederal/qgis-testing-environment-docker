@@ -18,7 +18,8 @@ if [ "$1"  != "master" ]; then
         python-mock python-nose2 python-psycopg2 python-pyspatialite python-qscintilla2 \
         python-qt4 python-qt4-dev python-qt4-sql python-sip python-sip-dev python-yaml \
         qt4-dev-tools spawn-fcgi txt2tags xauth xfonts-100dpi xfonts-75dpi \
-        xfonts-base xfonts-scalable xvfb vim supervisor expect-dev python-setuptools
+        xfonts-base xfonts-scalable xvfb vim supervisor expect-dev python-setuptools \
+        libqtkeychain0 qtkeychain-dev
 
         easy_install --upgrade pip
         pip install -r /usr/local/requirements.txt
