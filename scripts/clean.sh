@@ -3,7 +3,8 @@ set -e
 
 apt-get remove -y --purge qt4-qmake cmake-data qt4-linguist-tools libqt4-dev-bin
 
-dpkg --purge `dpkg -l "*-dev" | sed -ne 's/ii  \(.*-dev\(:amd64\)\?\) .*/\1/p'` || true
+# Keep python dev and other libs we need to build psutils for reporting plugin
+dpkg --purge `dpkg -l "*-dev" | egrep -v 'libexpat|python' | sed -ne 's/ii  \(.*-dev\(:amd64\)\?\) .*/\1/p'` || true
 
 if [ "$1"  == "master" ]; then
     # Clean for master (Py3/Qt5)
