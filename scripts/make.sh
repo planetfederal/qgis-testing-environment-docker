@@ -5,6 +5,11 @@ mkdir /build/release
 cd /build/release
 
 
+# 2.18, we want the oauth plugin
+if [[ "$1" == *"2_18"* ]]; then
+
+if [ "$1"  != "master_2" ]; then
+
 if [ "$1"  != "master" ]; then
     # Build for < master (Py2/Qt4)
     cmake /build/QGIS \

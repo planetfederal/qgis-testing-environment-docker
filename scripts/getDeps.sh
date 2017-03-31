@@ -29,7 +29,6 @@ if [ "$1"  != "master" ]; then
         chmod -R a+w /usr/lib/python2.7/dist-packages/PyQt4/uic/widget-plugins
 
 
-
 else
     # Deps for master (Py3/Qt5)
     LC_ALL=C DEBIAN_FRONTEND=noninteractive  \
@@ -44,7 +43,7 @@ else
         python3-pyqt5.qtsql python3-psycopg2 lighttpd locales pkg-config poppler-utils python3-dev \
         python3-pyqt5 pyqt5.qsci-dev python3-pyqt5.qtsql spawn-fcgi xauth xfonts-100dpi \
         xfonts-75dpi xfonts-base xfonts-scalable xvfb vim supervisor expect python3-setuptools \
-        python3-dev
+        python3-dev python3-owslib
 
         easy_install3 --upgrade pip
 
@@ -53,4 +52,21 @@ else
         chmod -R a+w /usr/lib/x86_64-linux-gnu/qt5/plugins/designer/
         chmod -R a+w /usr/lib/python3/dist-packages/PyQt5/uic/widget-plugins/
 
+fi
+
+
+# 2.18, we want the OAuth2 plugin
+if [[ "$1" == *"2_18"* ]]; then
+    LC_ALL=C DEBIAN_FRONTEND=noninteractive  \
+        apt-get install -y libqtkeychain0 qtkeychain-dev wget
+    wget "https://github.com/MonsantoCo/o2/archive/o2-monsanto-features.tar.gz"
+    pushd .
+    gunzip o2-monsanto-features.tar.gz
+    tar -xzf o2-monsanto-features.tar.gz
+    cd o2-o2-monsanto-features
+    mkdir build
+    cd build
+    cmake -DBUILD_SHARED_LIBS=ON -Do2_WITH_QT5=OFF ..
+    make -j4 install
+    popd
 fi
