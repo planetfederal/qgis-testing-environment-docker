@@ -29,7 +29,6 @@ if [ "$1"  != "master" ]; then
         chmod -R a+w /usr/lib/python2.7/dist-packages/PyQt4/uic/widget-plugins
 
 
-
 else
     # Deps for master (Py3/Qt5)
     LC_ALL=C DEBIAN_FRONTEND=noninteractive  \
@@ -53,4 +52,22 @@ else
         chmod -R a+w /usr/lib/x86_64-linux-gnu/qt5/plugins/designer/
         chmod -R a+w /usr/lib/python3/dist-packages/PyQt5/uic/widget-plugins/
 
+fi
+
+
+# 2.18, we want the OAuth2 plugin
+if [[ "$1" == *"2_18"* ]]; then
+    LC_ALL=C DEBIAN_FRONTEND=noninteractive  \
+        apt-get install -y libqtkeychain0 qtkeychain-dev wget unzip
+    wget "https://github.com/MonsantoCo/o2/archive/o2-monsanto-features.tar.gz"
+    pushd .
+    tar -xzf o2-monsanto-features.tar.gz
+    rm o2-monsanto-features.tar.gz
+    cd o2-o2-monsanto-features
+    mkdir build
+    cd build
+    cmake -DBUILD_SHARED_LIBS=ON -Do2_WITH_QT5=OFF ..
+    make -j4 install
+    popd
+    rm -rf o2-o2-monsanto-features
 fi
