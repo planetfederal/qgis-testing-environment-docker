@@ -58,15 +58,16 @@ fi
 # 2.18, we want the OAuth2 plugin
 if [[ "$1" == *"2_18"* ]]; then
     LC_ALL=C DEBIAN_FRONTEND=noninteractive  \
-        apt-get install -y libqtkeychain0 qtkeychain-dev wget
+        apt-get install -y libqtkeychain0 qtkeychain-dev wget unzip
     wget "https://github.com/MonsantoCo/o2/archive/o2-monsanto-features.tar.gz"
     pushd .
-    gunzip o2-monsanto-features.tar.gz
     tar -xzf o2-monsanto-features.tar.gz
+    rm o2-monsanto-features.tar.gz
     cd o2-o2-monsanto-features
     mkdir build
     cd build
     cmake -DBUILD_SHARED_LIBS=ON -Do2_WITH_QT5=OFF ..
     make -j4 install
     popd
+    rm -rf o2-o2-monsanto-features
 fi

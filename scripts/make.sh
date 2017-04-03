@@ -4,11 +4,21 @@ set -e
 mkdir /build/release
 cd /build/release
 
+CMAKE_EXTRA_ARGS=""
 
-# 2.18, we want the oauth plugin
+# 2.18, we want the OAuth2 plugin
 if [[ "$1" == *"2_18"* ]]; then
+    pushd .
+    wget -O oauth_plugin.zip https://github.com/boundlessgeo/qgis-oauth-cxxplugin/archive/master.zip
+    unzip oauth_plugin.zip
+    mv qgis-oauth-cxxplugin-master/oauth2  /build/QGIS/src/auth/
+    rm oauth_plugin.zip
+    echo "ADD_SUBDIRECTORY(oauth2)" >> /build/QGIS/src/auth/CMakeLists.txt
+    CMAKE_EXTRA_ARGS="-DWITH_INTERNAL_O2=OFF -DO2_LIBRARY_STATIC=/usr/local/lib/libo2.so -DO2_INCLUDE_DIR=/usr/local/include/o2"
+    popd
+fi
 
-if [ "$1"  != "master_2" ]; then
+
 
 if [ "$1"  != "master" ]; then
     # Build for < master (Py2/Qt4)
@@ -22,7 +32,7 @@ if [ "$1"  != "master" ]; then
         -DWITH_SERVER=OFF \
         -DBUILD_TESTING=OFF \
         -DENABLE_TESTS=OFF \
-        -DWITH_INTERNAL_QWTPOLAR=ON
+        -DWITH_INTERNAL_QWTPOLAR=ON $CMAKE_EXTRA_ARGS
 else
     # Build for master (Py3/Qt5)
     cmake /build/QGIS \
