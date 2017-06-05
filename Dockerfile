@@ -2,12 +2,13 @@ FROM ubuntu:16.04
 MAINTAINER Alessandro Pasotti <apasotti@boundlessgeo.com>
 
 ################################################################################
-# build arguments: branch and repository
-# WARNING: if branch == "master" Py3 and Qt5 build will be activated
+# build arguments: branch, repository and if legacy (Qt4 Py2)
 
 ARG QGIS_BRANCH=master
 # Note: do not use git but https here!
 ARG QGIS_REPOSITORY=https://github.com/qgis/QGIS.git
+# Set to "true" for Qt4/Py2
+ARG LEGACY=false
 
 
 ################################################################################
@@ -35,10 +36,10 @@ ADD requirements.txt /usr/local/requirements.txt
 COPY scripts /build/scripts
 
 # Install dependencies and git clone the repo and Make it
-RUN /build/scripts/getDeps.sh ${QGIS_BRANCH} && \
+RUN /build/scripts/getDeps.sh ${QGIS_BRANCH} ${LEGACY} && \
    cd /build && \
    git clone --depth 1 -b ${QGIS_BRANCH} ${QGIS_REPOSITORY} && \
-   /build/scripts/make.sh ${QGIS_BRANCH}
+   /build/scripts/make.sh ${QGIS_BRANCH} ${LEGACY}
 
 
 ################################################################################
@@ -61,6 +62,6 @@ ADD supervisor.xvfb.conf /etc/supervisor/supervisor.d/
 ENV PYTHONPATH=/usr/share/qgis/python/:/usr/lib/python2.7/dist-packages/qgis:/usr/lib/python3/dist-packages/qgis:/usr/share/qgis/python/qgis
 
 # Remove some unnecessary files
-RUN /build/scripts/clean.sh ${QGIS_BRANCH}
+RUN /build/scripts/clean.sh ${QGIS_BRANCH} ${LEGACY}
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]

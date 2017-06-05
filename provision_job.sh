@@ -12,10 +12,11 @@
 REPO=${1:-https://github.com/qgis/QGIS.git}
 BRANCH=${2:-master}
 TAG=${3:-master}
-DOCKER_HUB_USERNAME=$4
-DOCKER_HUB_PASSWORD=$5
-DOCKER_HUB_ACCOUNT=$6
-if [ -z "$6" ]; then
+LEGACY=${4:-false}
+DOCKER_HUB_USERNAME=$5
+DOCKER_HUB_PASSWORD=$6
+DOCKER_HUB_ACCOUNT=$7
+if [ -z "$7" ]; then
     DOCKER_HUB_ACCOUNT=${DOCKER_HUB_USERNAME}
 fi
 IMAGE_NAME=${DOCKER_HUB_ACCOUNT}/qgis-testing-environment
@@ -36,7 +37,8 @@ if [ -n "$IM_TO_RM" ]; then
 fi
 docker build -t ${IMAGE_NAME}:${TAG} \
     --build-arg QGIS_REPOSITORY=$REPO \
-    --build-arg QGIS_BRANCH=$BRANCH .
+    --build-arg QGIS_BRANCH=$BRANCH \
+    --build-arg LEGACY=$LEGACY .
 
 HASH=`git rev-parse HEAD|cut -c -8`
 docker tag ${IMAGE_NAME}:${TAG} ${IMAGE_NAME}:${HASH}

@@ -1,4 +1,8 @@
 #!/bin/bash
+# Accepts:
+# $1 branch
+# $2 legacy ("true"|"false")
+
 set -e
 
 mkdir /build/release
@@ -20,7 +24,7 @@ fi
 
 
 
-if [ "$1"  != "master" ]; then
+if [ "$2"  = "true" ]; then
     # Build for < master (Py2/Qt4)
     cmake /build/QGIS \
         -DQWT_INCLUDE_DIR=/usr/include/qwt-qt4 \

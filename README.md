@@ -20,7 +20,8 @@ You can build the image with:
 ```
 $ docker build -t qgis-testing-environment \
     --build-arg QGIS_REPOSITORY='https://github.com/qgis/QGIS.git' \
-    --build-arg QGIS_BRANCH='master' .
+    --build-arg QGIS_BRANCH='master' \
+    --build-arg LEGACY='false' .
 ```
 
 Optional APT CATCHER support can be activated by uncommenting a few lines in the
@@ -36,6 +37,7 @@ A set of environment variables can be used to configure the build:
     - *REPO* defaults to `https://github.com/qgis/QGIS.git`
     - *BRANCH* defaults to `master`
     - *TAG* defaults to `master` (this is the Docker image tag and not the git tag)
+    - *LEGACY* defaults to `false` (set to `true` for a Qt4 Python 2 build)
     - *DOCKER_HUB_USERNAME* no default
     - *DOCKER_HUB_PASSWORD* no default
 
@@ -60,17 +62,19 @@ Example run script for the *AWS* provider (`AWS_*` env vars are not shown):
     # 1: REPO default: https://github.com/qgis/QGIS.git
     # 2: BRANCH default: master
     # 3: TAG (for the generated Docker image): default: master
-    # 4: DOCKER_HUB_USERNAME: no default
-    # 5: DOCKER_HUB_PASSWORD: no default
-    # 6: DOCKER_HUB_ACCOUNT: default to $DOCKER_HUB_USERNAME
+    # 4: LEGACY default: false
+    # 5: DOCKER_HUB_USERNAME: no default
+    # 6: DOCKER_HUB_PASSWORD: no default
+    # 7: DOCKER_HUB_ACCOUNT: default to $DOCKER_HUB_USERNAME
 
     REPO="https://github.com/qgis/QGIS.git"
     BRANCH="master"
     TAG="master"
+    LEGACY="false"
     DOCKER_HUB_USERNAME="mydockerusername"
     DOCKER_HUB_PASSWORD="mydockerpassword"
 
-    ARGS="$REPO $BRANCH $TAG $DOCKER_HUB_USERNAME \
+    ARGS="$REPO $BRANCH $TAG $LEGACY $DOCKER_HUB_USERNAME \
          $DOCKER_HUB_PASSWORD"
     SHELL_ARGS="${ARGS}" vagrant up --provider=aws
     vagrant -f destroy

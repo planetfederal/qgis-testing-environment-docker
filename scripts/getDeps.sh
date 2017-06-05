@@ -1,11 +1,15 @@
 #!/bin/bash
+# Accepts:
+# $1 branch
+# $2 legacy ("true"|"false")
+
 set -e
 apt-get -y update
 apt-get install -y software-properties-common
 add-apt-repository ppa:ubuntugis/ubuntugis-unstable
 apt-get -y update
 
-if [ "$1"  != "master" ]; then
+if [ "$2"  = "true" ]; then
     # Deps for < master (Py2/Qt4)
     LC_ALL=C DEBIAN_FRONTEND=noninteractive  \
         apt-get install -y git cmake flex bison build-essential \
