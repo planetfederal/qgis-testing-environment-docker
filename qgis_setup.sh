@@ -58,5 +58,11 @@ if [ -n "$PLUGIN_NAME" ]; then
 fi
 
 # Install the plugin
-ln -s /tests_directory/${PLUGIN_NAME} ${PLUGIN_FOLDER}
-ln -s /tests_directory/${PLUGIN_NAME} ${PLUGIN_MASTER_FOLDER}
+if  [ ! -L "${PLUGIN_FOLDER}/${PLUGIN_NAME}" ]; then
+    ln -s /tests_directory/${PLUGIN_NAME} ${PLUGIN_FOLDER}
+    echo "Plugin folder linked in ${PLUGIN_FOLDER}/${PLUGIN_NAME}"
+fi
+if [ ! -d "${PLUGIN_MASTER_FOLDER}/${PLUGIN_NAME}" ]; then
+    ln -s /tests_directory/${PLUGIN_NAME} ${PLUGIN_MASTER_FOLDER}
+    echo "Plugin folder linked in ${PLUGIN_MASTER_FOLDER}/${PLUGIN_NAME}"
+fi
