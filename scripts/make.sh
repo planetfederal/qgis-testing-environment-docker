@@ -33,7 +33,7 @@ if [ "$2"  = "true" ]; then
         -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so \
         -DQSCINTILLA_INCLUDE_DIR=/usr/include/qt4 \
         -DWITH_QWTPOLAR=OFF \
-        -DWITH_SERVER=OFF \
+        -DWITH_SERVER=ON \
         -DBUILD_TESTING=OFF \
         -DENABLE_TESTS=OFF \
         -DWITH_INTERNAL_QWTPOLAR=ON $CMAKE_EXTRA_ARGS
@@ -50,7 +50,7 @@ else
         -DQSCINTILLA_INCLUDE_DIR=/usr/include/x86_64-linux-gnu/qt5/ \
         -DQSCINTILLA_LIBRARY=/usr/lib/libqt5scintilla2.so \
         -DWITH_QWTPOLAR=OFF \
-        -DWITH_SERVER=OFF \
+        -DWITH_SERVER=ON \
         -DBUILD_TESTING=OFF \
         -DENABLE_TESTS=OFF \
         -DWITH_INTERNAL_QWTPOLAR=ON

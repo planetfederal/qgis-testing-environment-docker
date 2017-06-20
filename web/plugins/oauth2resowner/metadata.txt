@@ -1,0 +1,14 @@
+[general]
+name=QGIS OAuth2 Resource Owner Grant Flow Plugin
+qgisMinimumVersion=2.8
+qgisMaximumVersion=2.99
+description=OAuth2 Plugin
+version=version 1.0
+author=Alessandro Pasotti (ItOpen)
+email=elpaso@itopen.it
+; if True it's a server plugin
+server=True
+
+changelog=
+
+about=OAuth2 Resource Owner Grant Flow

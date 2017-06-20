@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta content="">
+    <style>
+    * {
+        font-family: Arial, sans-serif;
+    }
+    </style>
+  </head>
+  <body>
+  <h1>QGIS Server Docker Container</h1>
+  <p>Place your HTML content here!</p>
+  <p>or browse one of the default endpoints:</p>
+  <ul>
+      <li><a href="/cgi-bin/qgis_mapserv.cgi?MAP=/web/projects/helloworld.qgs&SERVICE=WMS&REQUEST=GetCapabilities">GetCapabilities CGI</a></li>
+      <li><a href="/cgi-bin/qgis_mapserv.fcgi?MAP=/web/projects/helloworld.qgs&SERVICE=WMS&REQUEST=GetCapabilities">GetCapabilities Fast CGI</a></li>
+      <li><a href="/cgi-bin/qgis_mapserv.cgi?MAP=/web/projects/helloworld.qgs&SERVICE=WMS&REQUEST=GetProjectsettings">Browser CGI</a></li>
+      <li><a href="/cgi-bin/qgis_mapserv.fcgi?MAP=/web/projects/helloworld.qgs&SERVICE=WMS&REQUEST=GetProjectsettings">Browser Fast CGI</a></li>
+      <li><a href="/cgi-bin/show.cgi">Show CGI environment variables</a></li>
+  </ul>
+  </body>
+</html>

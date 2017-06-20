@@ -53,6 +53,7 @@ RUN chmod +x /usr/bin/qgis_*
 # Add service configuration script
 ADD supervisord.conf /etc/supervisor/
 ADD supervisor.xvfb.conf /etc/supervisor/supervisor.d/
+ADD supervisor.apache.conf /etc/supervisor/supervisor.d/
 
 # This paths are for
 # - kartoza images (compiled)
@@ -63,5 +64,7 @@ ENV PYTHONPATH=/usr/share/qgis/python/:/usr/lib/python2.7/dist-packages/qgis:/us
 
 # Remove some unnecessary files
 RUN /build/scripts/clean.sh ${QGIS_BRANCH} ${LEGACY}
+
+EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
