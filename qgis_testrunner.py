@@ -68,6 +68,7 @@ def __get_test_function(test_module_name):
         test_module = importlib.import_module(test_module_name)
         function_name = 'run_all'
     except ImportError as e:
+        traceback.print_exc(file=sys.stdout)
         # Strip latest name
         pos = test_module_name.rfind('.')
         if pos <= 0:
