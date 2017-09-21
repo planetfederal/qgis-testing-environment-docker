@@ -3,6 +3,8 @@
 # This is normally called from Travis or rundockertests.sh
 # before running the tests for a particular plugin
 #
+# Note: on QGIS3 assumes the default profile for root user
+#
 # - create the folders
 # - install startup.py monkey patches
 # - disable tips
@@ -11,9 +13,10 @@
 PLUGIN_NAME=$1
 CONF_FOLDER="/root/.config/QGIS"
 CONF_FILE="${CONF_FOLDER}/QGIS2.conf"
-CONF_MASTER_FILE="${CONF_FOLDER}/QGIS3.conf"
+CONF_MASTER_FILE="/root/.local/share/QGIS/QGIS3/profiles/default/QGIS/QGIS3.ini"
 QGIS_FOLDER="/root/.qgis2"
-QGIS_MASTER_FOLDER="/root/.qgis3"
+
+QGIS_MASTER_FOLDER="/root/.local/share/QGIS/QGIS3/profiles/default"
 PLUGIN_FOLDER="${QGIS_FOLDER}/python/plugins"
 PLUGIN_MASTER_FOLDER="${QGIS_MASTER_FOLDER}/python/plugins"
 
