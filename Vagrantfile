@@ -53,8 +53,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provider :aws do |aws, override|
-      aws.access_key_id = ENV["AWS_KEY"]
-      aws.secret_access_key = ENV["AWS_SECRET"]
+      aws.aws_profile = ENV["AWS_PROFILE"]
       aws.keypair_name = ENV["AWS_KEYNAME"]
 
       aws.terminate_on_shutdown = true

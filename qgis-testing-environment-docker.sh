@@ -14,8 +14,8 @@
 # DOCKER_HUB_ACCOUNT: default to DOCKER_HUB_USERNAME
 # VAGRANT_LOG: no default, set to "debug" for verbose output
 #
-# AWS_KEY: no default
-# AWS_SECRET: no default
+# For the Vagrant AWS provider
+# AWS_PROFILE: no default
 # AWS_KEYNAME: no default
 # AWS_KEYPATH: no default (jenkins user must own this file and chmod 0600)
 # AWS_REGION: no default

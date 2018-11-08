@@ -44,8 +44,7 @@ A set of environment variables can be used to configure the build:
 
  for the *AWS* provider:
 
-- **AWS_KEY**
-- **AWS_SECRET**
+- **AWS_PROFILE**
 - **AWS_KEYNAME**
 - **AWS_KEYPATH**
 - **AWS_REGION**
