@@ -19,6 +19,10 @@
 # AWS_KEYNAME: no default
 # AWS_KEYPATH: no default (jenkins user must own this file and chmod 0600)
 # AWS_REGION: no default
+# AWS_AMI: no default
+# AWS_INST_TYPE: no default
+# AWS_KEYPATH: no default
+# AWS_SECURITY_GROUP: no default
 
 set -e
 

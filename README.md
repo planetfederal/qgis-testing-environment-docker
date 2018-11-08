@@ -51,6 +51,7 @@ A set of environment variables can be used to configure the build:
 - **AWS_AMI** : this might depend on the region, the tests were performed on
   "ami-87564feb", that is a standard Ubuntu 14.04 available in region eu-central-1
 - **AWS_INST_TYPE** : instance type to launch, e.g. "m3.large"
+- **AWS_SECURITY_GROUP** : security group name to use for the instance
 
 
 Example run script for the *AWS* provider (`AWS_*` env vars are not shown):
