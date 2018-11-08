@@ -20,6 +20,7 @@
 # AWS_KEYPATH: no default (jenkins user must own this file and chmod 0600)
 # AWS_REGION: no default
 
+set -e
 
 cd "${WORKSPACE}"
 
