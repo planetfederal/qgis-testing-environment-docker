@@ -1,10 +1,18 @@
-qgis-testing-environment
-================================
+# qgis-testing-environment
+
+## PLEASE NOTE that some of this repo's work was eventually contributed directly to the QGIS project, and is now used in its CI testing
+
+See:
+https://github.com/qgis/QGIS/tree/master/.docker
+
+It is highly recommended to use the QGIS project's Docker setup instead of this one. Also, they have pre-built images you can readily use.
+
+## Old README follows...
 
 This is a simple container for testing QGIS Desktop and for
 executing unit tests inside a real QGIS instance.
 
-# Features
+## Features
 
 The docker file builds QGIS from a specified git repo and branch and
 sets up a testing environment and to run tests inside QGIS.
@@ -13,11 +21,11 @@ You can use this docker to test QGIS or to run unit tests inside QGIS,
 xvfb is available and running as a service inside the container to allow
 for fully automated headless testing in Travis CI jobs.
 
-# Building
+## Building
 
 You can build the image with:
 
-```
+```sh
 $ docker build -t qgis-testing-environment \
     --build-arg QGIS_REPOSITORY='https://github.com/qgis/QGIS.git' \
     --build-arg QGIS_BRANCH='master' \
@@ -27,20 +35,19 @@ $ docker build -t qgis-testing-environment \
 Optional APT CATCHER support can be activated by uncommenting a few lines in the
 docker file (see the comments in `Dockerfile`).
 
-# Building with Vagrant
+## Building with Vagrant
 
 A `Vagrantfile` is available for *AWS* and *VirtualBox* providers.
 
 A set of environment variables can be used to configure the build:
 
 - **SHELL_ARGS** the parameters passed to the build script in this order:
-    - *REPO* defaults to `https://github.com/qgis/QGIS.git`
-    - *BRANCH* defaults to `master`
-    - *TAG* defaults to `master` (this is the Docker image tag and not the git tag)
-    - *LEGACY* defaults to `false` (set to `true` for a Qt4 Python 2 build)
-    - *DOCKER_HUB_USERNAME* no default
-    - *DOCKER_HUB_PASSWORD* no default
-
+  - *REPO* defaults to `https://github.com/qgis/QGIS.git`
+  - *BRANCH* defaults to `master`
+  - *TAG* defaults to `master` (this is the Docker image tag and not the git tag)
+  - *LEGACY* defaults to `false` (set to `true` for a Qt4 Python 2 build)
+  - *DOCKER_HUB_USERNAME* no default
+  - *DOCKER_HUB_PASSWORD* no default
 
  for the *AWS* provider:
 
@@ -53,9 +60,9 @@ A set of environment variables can be used to configure the build:
 - **AWS_INST_TYPE** : instance type to launch, e.g. "m3.large"
 - **AWS_SECURITY_GROUP** : security group name to use for the instance
 
-
 Example run script for the *AWS* provider (`AWS_*` env vars are not shown):
 
+```sh
     #!/bin/bash
     # Pass arguments to vagrant to configure the build
     #
@@ -78,32 +85,35 @@ Example run script for the *AWS* provider (`AWS_*` env vars are not shown):
          $DOCKER_HUB_PASSWORD"
     SHELL_ARGS="${ARGS}" vagrant up --provider=aws
     vagrant -f destroy
+```
 
-# Configuring a Jenkins job to do automatic builds
+## Configuring a Jenkins job to do automatic builds
 
 Jenkins needs Vagrant and Git plugins.
 Vagrant needs the AWS plugin installed and available for the `jenkins` user:
 
+```sh
     $ sudo -iu jenkins vagrant plugin install vagrant-aws
+```
 
-# Running QGIS
+## Running QGIS
 
 To run a container, assuming that you want to use your current display to use
 QGIS and the image is named `qgis-testing-environment`:
 
-```
+```sh
 # Allow connections from any host
 $ xhost +
 $ docker run --rm  -it --name qgis-testing-environment -v /tmp/.X11-unix:/tmp/.X11-unix  \
     -e DISPLAY=unix$DISPLAY qgis-testing-environment qgis
 ```
 
-# Running unit tests inside QGIS
+## Running unit tests inside QGIS
 
 Suppose that you have local directory containing the tests to execute into
 QGIS:
 
-```
+```sh
 /my_tests/travis_tests/
 ├── faketest.py
 ├── __init__.py
@@ -115,8 +125,7 @@ To run the tests inside the container, you have to mount the directory that
 contains the tests (e.g. your local directory `/my_tests`) into a volume
 that is accessible by the container.
 
-
-```
+```sh
 $ docker run -d --name qgis-testing-environment -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v /my_tests/:/tests_directory -e DISPLAY=:99 qgis-testing-environment
 
@@ -125,7 +134,7 @@ $ docker run -d --name qgis-testing-environment -v /tmp/.X11-unix:/tmp/.X11-unix
 When done, you can invoke the test runnner (output follows, the failure is
 expected):
 
-```
+```sh
 $ docker exec -it qgis-testing-environment sh -c "qgis_testrunner.sh travis_tests.test_TravisTest.run_fail"
 QGIS Test Runner - Trying to import travis_tests.test_TravisTest
 QGIS Test Runner - launching QGIS as qgis --nologo --noversioncheck --code /usr/bin/qgis_testrunner.py travis_tests.test_TravisTest ...
@@ -159,13 +168,12 @@ Ran 4 tests in 0.001s
 FAILED (failures=1)
 ```
 
-## Options for the test runner
+### Options for the test runner
 
 The env var `QGIS_EXTRA_OPTIONS` defaults to an empty string and can
 contains extra parameters that are passed to QGIS by the test runner.
 
-
-# Implementation notes
+## Implementation notes
 
 The main goal of this image was to execute unit tests inside a real instance
 of QGIS (not a mocked one).
@@ -179,10 +187,10 @@ The implementation is:
     plugin is needed to run the tests)
 - execute `qgis_setup.sh MyPluginName` script in docker that sets up QGIS to
   avoid blocking modal dialogs  and installs the plugin into QGIS if needed
-    - create config and python plugin folders for QGIS
-    - disable tooltips in the `QGIS2.conf` file
-    - enable the plugin  in the `QGIS2.conf` file
-    - install the `startup.py` script to disable python exception modal dialogs
+  - create config and python plugin folders for QGIS
+  - disable tooltips in the `QGIS2.conf` file
+  - enable the plugin  in the `QGIS2.conf` file
+  - install the `startup.py` script to disable python exception modal dialogs
 - execute the tests by running `qgis_testrunner.sh MyPluginName.tests.tests_MyTestModule.run_my_tests_function`
 - the output of the tests is captured by the `test_runner.sh` script and
   searched for `FAILED` (that is in the standard unit tests output), if
@@ -194,12 +202,11 @@ can end with the function that has to be called inside the module to run the
 tests. The last part (`.run_my_tests_function`) can be omitted and defaults to
 `run_all`.
 
-
-# Running in Travis
+## Running in Travis
 
 This is a simple use case for running unit tests of a small QGIS plugin:
 
-```
+```sh
 services:
     - docker
 before_install:
